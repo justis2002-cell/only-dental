@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진료안내 - 덴탈클리닉</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: optional;
+        }
+    </style>
+    <style>
+        .guide-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .guide-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            align-items: flex-start;
+        }
+
+        .guide-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .guide-image {
+            flex: 0 0 300px;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .guide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .guide-text {
+            flex: 1;
+        }
+
+        .guide-item h3 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-content {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .guide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .guide-content li {
+            margin-bottom: 0.8rem;
+            color: #555;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .guide-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+.sub-hero {
+    position: relative;
+    height: 400px;
+    background-image: url('hero1.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+        .sub-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 77, 153, 0.85);
+            z-index: 0;
+        }
+
+        .sub-hero>div {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+
+            .guide-item,
+            .guide-item:nth-child(even) {
+                flex-direction: column;
+            }
+
+            .guide-image {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="logo">
+        <a href="index.html">
+            <img src="logo1.png" alt="ONLY DENTAL" class="logo-img" id="logo-img">
+            <span class="logo-text">ONLY DENTAL</span>
+        </a>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="about.html">병원소개</a></li>
+            <li><a href="service.html">진료과목</a></li>
+            <li><a href="guide.html" class="active">진료안내</a></li>
+            <li><a href="knowledge.html">치과상식</a></li>
+            <li><a href="notice.html">공지사항</a></li>
+        </ul>
+    </nav>
+    <div class="mobile-menu-toggle">☰</div>
+</header>
+
+    <div class="sub-hero">
+        <div>
+            <h1>진료안내</h1>
+            <p>치료 후 주의사항을 안내해 드립니다</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="guide-container">
+            <div class="guide-item">
+                <div class="guide-image">
+                    <img src="service-implant.png" alt="임플란트 수술">
+                </div>
+                <div class="guide-text">
+                    <h3>🦷 임플란트 수술 후 주의사항</h3>
+                    <div class="guide-content">
+                        <ul>
+                            <li>수술 후 침이나 피는 뱉지 말고 삼켜주세요. 뱉으면 지혈이 되지 않습니다.</li>
+                            <li>거즈는 약 2시간 동안 꽉 물고 계셔야 합니다.</li>
+                            <li>수술 당일은 뜨거운 음식보다는 차가운 유동식(죽)을 드시는 것이 좋습니다.</li>
+                            <li>수술 후 2주 동안은 음주와 흡연을 절대 금지합니다.</li>
+                            <li>처방받으신 약은 지시에 따라 끝까지 복용해주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-image">
+                    <img src="service-wisdom.png" alt="발치">
+                </div>
+                <div class="guide-text">
+                    <h3>🦷 발치 후 주의사항</h3>
+                    <div class="guide-content">
+                        <ul>
+                            <li>마취가 풀릴 때까지(약 2~3시간) 혀나 입술을 깨물지 않도록 주의하세요.</li>
+                            <li>발치 부위를 혀로 만지거나 빨지 마세요.</li>
+                            <li>빨대 사용은 피해주세요. (음압으로 인해 지혈이 방해됩니다)</li>
+                            <li>통증이 심할 경우 얼음찜질을 해주시면 도움이 됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-item">
+                <div class="guide-image">
+                    <img src="service-cavity.png" alt="스케일링">
+                </div>
+                <div class="guide-text">
+                    <h3>🦷 스케일링/잇몸치료 후</h3>
+                    <div class="guide-content">
+                        <ul>
+                            <li>치료 후 일시적으로 이가 시릴 수 있으나, 며칠 내로 가라앉습니다.</li>
+                            <li>미지근한 물로 양치하는 것이 좋습니다.</li>
+                            <li>자극적인 음식(맵거나 짠 음식)은 피해주세요.</li>
+                            <li>치간칫솔과 치실을 사용하여 잇몸 관리를 꾸준히 해주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer style="background-color: var(--primary-blue); color: rgba(255,255,255,0.85); padding: 3.5rem 10%;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 3rem; justify-content: space-between; align-items: flex-start;">
+
+        <!-- 로고 + 병원명 -->
+        <div style="min-width: 200px;">
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                <img src="logo1.png" alt="ONLY DENTAL" style="height: 40px; filter: brightness(0) invert(1);">
+                <span style="font-size: 1.2rem; font-weight: 700; color: white; letter-spacing: 1px;">ONLY DENTAL</span>
+            </div>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.8;">
+                오직 당신의 미소를 위해<br>단 하나의 치과, 온리치과
+            </p>
+        </div>
+
+        <!-- 사업자 정보 -->
+        <div style="min-width: 260px;">
+            <p style="font-weight: 700; color: white; margin-bottom: 0.8rem; font-size: 0.95rem;">사업자 정보</p>
+            <p style="font-size: 0.88rem; line-height: 2; color: rgba(255,255,255,0.75);">
+                상호명: 온리치과 &nbsp;|&nbsp; 대표자: 홍길동<br>
+                사업자번호: 123-45-67890<br>
+                주소: 서울특별시 강남구 테헤란로 123<br>
+                Tel: 02-1234-5678
+            </p>
+        </div>
+
+        <!-- 진료시간 요약 -->
+        <div style="min-width: 200px;">
+            <p style="font-weight: 700; color: white; margin-bottom: 0.8rem; font-size: 0.95rem;">진료시간</p>
+            <p style="font-size: 0.88rem; line-height: 2; color: rgba(255,255,255,0.75);">
+                평일: 10:00 ~ 19:00<br>
+                화/목 야간: 10:00 ~ 21:00<br>
+                토요일: 10:00 ~ 14:00<br>
+                <span style="color: #ffb3b3;">일요일 · 공휴일 휴진</span>
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 하단 구분선 + 카피라이트 -->
+    <div style="border-top: 2px solid var(--accent-green); margin-top: 2.5rem; padding-top: 1.5rem; text-align: center;">
+        <p style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">&copy; 2024 ONLY DENTAL. All rights reserved.</p>
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

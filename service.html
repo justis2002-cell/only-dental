@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진료과목 - 온리치과</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: optional;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('fonts/Pretendard-ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: optional;
+        }
+
+        .sub-hero {
+            position: relative;
+            height: 400px;
+            background-image: url('hero1.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .sub-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 77, 153, 0.85);
+            z-index: 0;
+        }
+
+        .sub-hero > div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 6rem 10%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .service-detail-item:nth-child(even) {
+            flex-direction: row-reverse;
+            background-color: #f9f9f9;
+        }
+
+        .service-detail-img {
+            flex: 1.2;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-detail-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .service-detail-text {
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .service-detail-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .service-detail-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .service-detail-text ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-detail-text ul li {
+            font-size: 1rem;
+            color: #444;
+            padding: 0.4rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .service-detail-item,
+            .service-detail-item:nth-child(even) {
+                flex-direction: column;
+                padding: 4rem 5%;
+                gap: 2rem;
+            }
+
+            .service-detail-img {
+                width: 100%;
+                height: 300px;
+            }
+
+            .service-detail-text {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo1.png" alt="ONLY DENTAL" class="logo-img" id="logo-img">
+                <span class="logo-text">ONLY DENTAL</span>
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html">병원소개</a></li>
+                <li><a href="service.html" class="active">진료과목</a></li>
+                <li><a href="guide.html">진료안내</a></li>
+                <li><a href="knowledge.html">치과상식</a></li>
+                <li><a href="notice.html">공지사항</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-toggle">☰</div>
+    </header>
+
+    <div class="sub-hero">
+        <div>
+            <h1>진료과목</h1>
+            <p>분야별 전문 의료진의 수준 높은 진료를 약속합니다</p>
+        </div>
+    </div>
+
+    <main>
+        <section id="implant" class="service-detail-item">
+            <div class="service-detail-img">
+                <img src="service-implant.png" alt="임플란트">
+            </div>
+            <div class="service-detail-text">
+                <h3 class="text-green">임플란트 클리닉</h3>
+                <p>자연 치아와 가장 유사한 기능과 형태를 회복시켜주는 인공 치아 식립술입니다.<br>
+                최첨단 3D CT 분석을 통해 신경 위치와 잇몸 뼈 상태를 정밀하게 파악하여,
+                오차 없는 안전한 수술을 진행합니다.</p>
+                <ul>
+                    <li>✔ <strong>정밀 진단:</strong> 3D CT를 이용한 모의 수술</li>
+                    <li>✔ <strong>통증 최소화:</strong> 단계별 마취 시스템 적용</li>
+                    <li>✔ <strong>맞춤형 지대주:</strong> 개인별 잇몸 라인에 맞춘 커스텀 어버트먼트</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="ortho" class="service-detail-item">
+            <div class="service-detail-img">
+                <img src="service-ortho.png" alt="치아교정">
+            </div>
+            <div class="service-detail-text">
+                <h3 class="text-blue">치아교정 클리닉</h3>
+                <p>단순히 치아를 가지런하게 하는 것을 넘어, 얼굴형과 조화를 이루는 아름다운 미소 라인을 찾아드립니다.<br>
+                정밀한 교합 분석을 통해 기능적인 문제는 물론 심미적인 개선까지 함께 고려합니다.</p>
+                <ul>
+                    <li>✔ <strong>다양한 장치:</strong> 클리피씨, 투명교정, 설측교정 등</li>
+                    <li>✔ <strong>비발치 우선:</strong> 자연 치아를 최대한 보존하는 교정</li>
+                    <li>✔ <strong>체계적 관리:</strong> 교정 후 유지관리 프로그램</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="cavity" class="service-detail-item">
+            <div class="service-detail-img">
+                <img src="service-cavity.png" alt="충치치료">
+            </div>
+            <div class="service-detail-text">
+                <h3 class="text-pink">충치치료 클리닉</h3>
+                <p>치아는 한 번 손상되면 재생되지 않기 때문에 조기 발견과 치료가 중요합니다.<br>
+                정확한 진단으로 꼭 필요한 부분만 삭제하며, 자연 치아를 최대한 오래 쓸 수 있도록 보존적인 치료를 지향합니다.</p>
+                <ul>
+                    <li>✔ <strong>레진 치료:</strong> 초기 충치 즉일 치료</li>
+                    <li>✔ <strong>인레이/온레이:</strong> 치아 색과 동일한 심미 보철</li>
+                    <li>✔ <strong>신경 치료:</strong> 심한 충치로부터 치아 살리기</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="wisdom" class="service-detail-item">
+            <div class="service-detail-img">
+                <img src="service-wisdom.png" alt="사랑니 발치">
+            </div>
+            <div class="service-detail-text">
+                <h3 class="text-orange">사랑니 발치</h3>
+                <p>누워있거나 매복된 사랑니는 주변 치아를 망가뜨리고 염증을 유발할 수 있습니다.<br>
+                대학병원급 구강외과 수술 노하우로 신경 손상 없이 안전하고 빠르게 발치합니다.</p>
+                <ul>
+                    <li>✔ <strong>당일 발치:</strong> 예약 시 당일 발치 가능</li>
+                    <li>✔ <strong>난발치 전문:</strong> 완전 매복, 부분 매복 사랑니</li>
+                    <li>✔ <strong>회복 관리:</strong> 발치 후 꼼꼼한 소독 및 케어</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="denture" class="service-detail-item">
+            <div class="service-detail-img">
+                <img src="service-denture.jpg" alt="임플란트 틀니">
+            </div>
+            <div class="service-detail-text">
+                <h3 class="text-purple">임플란트 틀니</h3>
+                <p>기존 틀니의 불편함을 개선하고 임플란트의 비용 부담을 줄인 합리적인 치료입니다.<br>
+                소수의 임플란트만 식립하여 틀니를 단단하게 고정하므로 씹는 힘이 강하고 유지력이 뛰어납니다.</p>
+                <ul>
+                    <li>✔ <strong>강한 고정력:</strong> 말하거나 먹을 때 빠지지 않음</li>
+                    <li>✔ <strong>잇몸 보호:</strong> 잇몸 눌림 통증 최소화</li>
+                    <li>✔ <strong>비용 절감:</strong> 전체 임플란트 대비 경제적</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+<footer style="background-color: var(--primary-blue); color: rgba(255,255,255,0.85); padding: 3.5rem 10%;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 3rem; justify-content: space-between; align-items: flex-start;">
+
+        <!-- 로고 + 병원명 -->
+        <div style="min-width: 200px;">
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                <img src="logo1.png" alt="ONLY DENTAL" style="height: 40px; filter: brightness(0) invert(1);">
+                <span style="font-size: 1.2rem; font-weight: 700; color: white; letter-spacing: 1px;">ONLY DENTAL</span>
+            </div>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.8;">
+                오직 당신의 미소를 위해<br>단 하나의 치과, 온리치과
+            </p>
+        </div>
+
+        <!-- 사업자 정보 -->
+        <div style="min-width: 260px;">
+            <p style="font-weight: 700; color: white; margin-bottom: 0.8rem; font-size: 0.95rem;">사업자 정보</p>
+            <p style="font-size: 0.88rem; line-height: 2; color: rgba(255,255,255,0.75);">
+                상호명: 온리치과 &nbsp;|&nbsp; 대표자: 홍길동<br>
+                사업자번호: 123-45-67890<br>
+                주소: 서울특별시 강남구 테헤란로 123<br>
+                Tel: 02-1234-5678
+            </p>
+        </div>
+
+        <!-- 진료시간 요약 -->
+        <div style="min-width: 200px;">
+            <p style="font-weight: 700; color: white; margin-bottom: 0.8rem; font-size: 0.95rem;">진료시간</p>
+            <p style="font-size: 0.88rem; line-height: 2; color: rgba(255,255,255,0.75);">
+                평일: 10:00 ~ 19:00<br>
+                화/목 야간: 10:00 ~ 21:00<br>
+                토요일: 10:00 ~ 14:00<br>
+                <span style="color: #ffb3b3;">일요일 · 공휴일 휴진</span>
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 하단 구분선 + 카피라이트 -->
+    <div style="border-top: 2px solid var(--accent-green); margin-top: 2.5rem; padding-top: 1.5rem; text-align: center;">
+        <p style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">&copy; 2024 ONLY DENTAL. All rights reserved.</p>
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
