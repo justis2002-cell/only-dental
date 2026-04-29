@@ -162,7 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animTargets.forEach(({ selector, cls }) => {
         document.querySelectorAll(selector).forEach(el => {
-            el.classList.add(cls);
+            if (!el.classList.contains('hero-text')) {
+                el.classList.add(cls);
+            }
         });
     });
 
