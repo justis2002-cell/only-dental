@@ -83,29 +83,49 @@ document.addEventListener('DOMContentLoaded', () => {
         const dots = document.querySelectorAll('.dot');
 
         function goToSlide(index) {
-            const currentContent = slides[current].querySelector('.hero-content-box');
-            if (currentContent) {
-                currentContent.style.opacity = '0';
-                currentContent.style.transform = 'translateY(10px)';
-            }
-            slides[current].classList.remove('active');
+            const currentSlide = slides[current];
+            const nextSlide = slides[index];
+
+            // 현재 슬라이드 페이드 아웃
+            currentSlide.style.transition = 'opacity 0.8s ease';
+            currentSlide.style.opacity = '0';
             dots[current]?.classList.remove('active');
-            current = index;
-            slides[current].classList.add('active');
-            dots[current]?.classList.add('active');
-            const nextContent = slides[current].querySelector('.hero-content-box');
-            if (nextContent) {
-                nextContent.style.transition = 'none';
-                nextContent.style.opacity = '0';
-                nextContent.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                currentSlide.classList.remove('active');
+                currentSlide.style.opacity = '';
+                currentSlide.style.transition = '';
+
+                current = index;
+
+                // 다음 슬라이드 페이드 인
+                nextSlide.style.opacity = '0';
+                nextSlide.classList.add('active');
+                dots[current]?.classList.add('active');
+
+                // 이미지랑 텍스트 동시에 등장!
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
-                        nextContent.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                        nextContent.style.opacity = '1';
-                        nextContent.style.transform = 'translateY(0)';
+                        nextSlide.style.transition = 'opacity 0.8s ease';
+                        nextSlide.style.opacity = '1';
+
+                        // 텍스트도 같은 타이밍에
+                        const content = nextSlide.querySelector('.hero-content-box');
+                        if (content) {
+                            content.style.transition = 'none';
+                            content.style.opacity = '0';
+                            content.style.transform = 'translateY(20px)';
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    content.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                                    content.style.opacity = '1';
+                                    content.style.transform = 'translateY(0)';
+                                });
+                            });
+                        }
                     });
                 });
-            }
+            }, 800);
         }
 
         function startAutoPlay() { slideTimer = setInterval(() => goToSlide((current + 1) % slides.length), 4500); }
