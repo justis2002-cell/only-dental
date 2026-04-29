@@ -83,49 +83,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const dots = document.querySelectorAll('.dot');
 
         function goToSlide(index) {
+            if (current === index) return;
+
             const currentSlide = slides[current];
             const nextSlide = slides[index];
 
-            // 현재 슬라이드 페이드 아웃
-            currentSlide.style.transition = 'opacity 0.8s ease';
-            currentSlide.style.opacity = '0';
+            // 다음 슬라이드 미리 준비 (뒤에 깔아두기)
+            nextSlide.style.opacity = '0';
+            nextSlide.classList.add('active');
             dots[current]?.classList.remove('active');
+            dots[index]?.classList.add('active');
 
-            setTimeout(() => {
-                currentSlide.classList.remove('active');
-                currentSlide.style.opacity = '';
-                currentSlide.style.transition = '';
+            // 현재 슬라이드 페이드 아웃하면서 동시에 다음 슬라이드 페이드 인
+            requestAnimationFrame(() => {
+                currentSlide.style.transition = 'opacity 1s ease';
+                currentSlide.style.opacity = '0';
 
-                current = index;
+                nextSlide.style.transition = 'opacity 1s ease';
+                nextSlide.style.opacity = '1';
 
-                // 다음 슬라이드 페이드 인
-                nextSlide.style.opacity = '0';
-                nextSlide.classList.add('active');
-                dots[current]?.classList.add('active');
-
-                // 이미지랑 텍스트 동시에 등장!
-                requestAnimationFrame(() => {
+                // 텍스트 애니메이션
+                const content = nextSlide.querySelector('.hero-content-box');
+                if (content) {
+                    content.style.opacity = '0';
+                    content.style.transform = 'translateY(20px)';
+                    content.style.transition = 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s';
                     requestAnimationFrame(() => {
-                        nextSlide.style.transition = 'opacity 0.8s ease';
-                        nextSlide.style.opacity = '1';
-
-                        // 텍스트도 같은 타이밍에
-                        const content = nextSlide.querySelector('.hero-content-box');
-                        if (content) {
-                            content.style.transition = 'none';
-                            content.style.opacity = '0';
-                            content.style.transform = 'translateY(20px)';
-                            requestAnimationFrame(() => {
-                                requestAnimationFrame(() => {
-                                    content.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                                    content.style.opacity = '1';
-                                    content.style.transform = 'translateY(0)';
-                                });
-                            });
-                        }
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0)';
                     });
-                });
-            }, 800);
+                }
+
+                setTimeout(() => {
+                    currentSlide.classList.remove('active');
+                    currentSlide.style.opacity = '';
+                    currentSlide.style.transition = '';
+                    current = index;
+                }, 1000);
+            });
         }
 
         function startAutoPlay() { slideTimer = setInterval(() => goToSlide((current + 1) % slides.length), 4500); }
