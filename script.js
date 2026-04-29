@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. 메인 히어로 슬라이더
     // ──────────────────────────────────────────
     const slides = document.querySelectorAll('.hero-slide');
+    const texts = document.querySelectorAll('.hero-text');
     let current = 0;
 
     if (slides.length > 0) {
@@ -78,31 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function goToSlide(index) {
             const dots = document.querySelectorAll('.dot');
+
+            // 이미지 전환
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
+
+            // 텍스트 전환 (이미지랑 별개!)
+            if (texts[current]) texts[current].classList.remove('active');
+
             current = index;
+
             slides[current].classList.add('active');
             dots[current].classList.add('active');
-
-            // 텍스트만 opacity 애니메이션
-            const content = slides[current].querySelector('.hero-content-box');
-            if (content) {
-                content.style.opacity = '0';
-                setTimeout(() => {
-                    content.style.transition = 'opacity 0.8s ease';
-                    content.style.opacity = '1';
-                }, 200);
-            }
-        }
-
-        // 첫 슬라이드 텍스트 등장
-        const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
-        if (firstContent) {
-            firstContent.style.opacity = '0';
-            setTimeout(() => {
-                firstContent.style.transition = 'opacity 1s ease';
-                firstContent.style.opacity = '1';
-            }, 300);
+            if (texts[current]) texts[current].classList.add('active');
         }
 
         setInterval(() => {

@@ -178,13 +178,14 @@ header.scrolled nav a.active {
     z-index: 2;
 }
 
-/* 히어로 파란 박스 */
-.hero-content-box {
+/* 히어로 고정 그라데이션 & 텍스트 래퍼 */
+.hero-content-wrapper {
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
     width: 100%;
+    z-index: 10;
     background: linear-gradient(
         to right,
         rgba(0, 77, 153, 0) 0%,
@@ -195,15 +196,30 @@ header.scrolled nav a.active {
         rgba(0, 77, 153, 0.9) 85%,
         rgba(0, 77, 153, 1) 100%
     );
+    pointer-events: none; /* 클릭 이벤트가 아래 슬라이드(점 등)로 전달되게 함 */
+}
+
+.hero-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 3rem 6% 3rem 58%;
-    z-index: 3;
-    transition: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
 }
 
-.hero-content-box h1 {
+.hero-text.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.hero-text h1 {
     font-size: 4.5rem !important;
     font-weight: 800 !important;
     color: white !important;
