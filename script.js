@@ -58,104 +58,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ──────────────────────────────────────────
-    // 4. 메인 히어로 슬라이더 (index.html 전용)
+    // 4. 메인 히어로 슬라이더
     // ──────────────────────────────────────────
     const slides = document.querySelectorAll('.hero-slide');
     let current = 0;
-    let slideTimer = null;
 
     if (slides.length > 0) {
         const heroSection = document.querySelector('.hero');
-        let dotsWrapper = document.querySelector('.hero-dots');
+        const dotsWrapper = document.createElement('div');
+        dotsWrapper.className = 'hero-dots';
+        heroSection.appendChild(dotsWrapper);
 
-        if (!dotsWrapper) {
-            dotsWrapper = document.createElement('div');
-            dotsWrapper.className = 'hero-dots';
-            heroSection.appendChild(dotsWrapper);
-            slides.forEach((_, i) => {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (i === 0 ? ' active' : '');
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsWrapper.appendChild(dot);
-            });
-        }
-
-        const dots = document.querySelectorAll('.dot');
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsWrapper.appendChild(dot);
+        });
 
         function goToSlide(index) {
-            if (current === index) return;
-
-            const currentSlide = slides[current];
-            const nextSlide = slides[index];
-
-            nextSlide.style.opacity = '0';
-            nextSlide.classList.add('active');
-            dots[current]?.classList.remove('active');
-            dots[index]?.classList.add('active');
-
-            currentSlide.style.transition = 'opacity 1s ease';
-            currentSlide.style.opacity = '0';
-            nextSlide.style.transition = 'opacity 1s ease';
-            nextSlide.style.opacity = '1';
-
-            const content = nextSlide.querySelector('.hero-content-box');
-            if (content) {
-                content.style.transition = 'opacity 0.8s ease 0.3s';
-                content.style.opacity = '0';
-                setTimeout(() => {
-                    content.style.opacity = '1';
-                }, 100);
-            }
-
-            setTimeout(() => {
-                currentSlide.classList.remove('active');
-                currentSlide.style.opacity = '';
-                currentSlide.style.transition = '';
-                current = index;
-            }, 1000);
+            const dots = document.querySelectorAll('.dot');
+            
+            // 현재 꺼
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            
+            // current 먼저 업데이트!
+            current = index;
+            
+            // 다음 켜기
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
         }
 
-        function startAutoPlay() {
-            slideTimer = setInterval(() => {
-                goToSlide((current + 1) % slides.length);
-            }, 4000); // 모든 슬라이드 동일한 간격!
-        }
-
-        function stopAutoPlay() {
-            clearInterval(slideTimer);
-        }
-
-        const hero = document.querySelector('.hero');
-        hero.addEventListener('mouseenter', stopAutoPlay);
-        hero.addEventListener('mouseleave', startAutoPlay);
-
-        // 첫 슬라이드 텍스트 등장
-        const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
-        if (firstContent) {
-            firstContent.style.opacity = '0';
-            firstContent.style.transform = 'translateY(30px)';
-            firstContent.style.transition = 'none';
-            setTimeout(() => {
-                firstContent.style.transition = 'opacity 1s ease, transform 1s ease';
-                firstContent.style.opacity = '1';
-                firstContent.style.transform = 'translateY(0)';
-            }, 300);
-
-            // 내부 요소 순차 등장
-            const heroElements = firstContent.querySelectorAll('*');
-            heroElements.forEach((el, i) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(15px)';
-                el.style.transition = 'none';
-                setTimeout(() => {
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, 400 + (i * 100));
-            });
-        }
-
-        startAutoPlay();
+        setInterval(() => {
+            const next = (current + 1) % slides.length;
+            goToSlide(next);
+        }, 4000);
     }
 
 
