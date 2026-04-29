@@ -78,31 +78,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function goToSlide(index) {
             const dots = document.querySelectorAll('.dot');
-            
-            // 현재 꺼
+
+            // 현재 슬라이드 끄기
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
-            
-            // current 업데이트
+
+            // 현재 텍스트 페이드 아웃
+            const currentContent = slides[current].querySelector('.hero-content-box');
+            if (currentContent) {
+                currentContent.style.transition = 'opacity 0.5s ease';
+                currentContent.style.opacity = '0';
+            }
+
             current = index;
-            
-            // 다음 켜기
+
+            // 다음 슬라이드 켜기
             slides[current].classList.add('active');
             dots[current].classList.add('active');
 
-            // 텍스트 opacity만 애니메이션!
-            const content = slides[current].querySelector('.hero-content-box');
-            if (content) {
-                content.style.opacity = '0';
-                content.style.transition = 'none';
+            // 다음 텍스트 페이드 인 (슬라이드 전환 후)
+            const nextContent = slides[current].querySelector('.hero-content-box');
+            if (nextContent) {
+                nextContent.style.opacity = '0';
+                nextContent.style.transition = 'none';
                 setTimeout(() => {
-                    content.style.transition = 'opacity 0.8s ease';
-                    content.style.opacity = '1';
-                }, 50);
+                    nextContent.style.transition = 'opacity 0.8s ease';
+                    nextContent.style.opacity = '1';
+                }, 500);
             }
         }
 
-        // 첫 슬라이드 텍스트도!
+        // 첫 슬라이드 텍스트 등장
         const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
         if (firstContent) {
             firstContent.style.opacity = '0';
@@ -113,8 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         setInterval(() => {
-            const next = (current + 1) % slides.length;
-            goToSlide(next);
+            goToSlide((current + 1) % slides.length);
         }, 4000);
     }
 
