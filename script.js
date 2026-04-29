@@ -312,4 +312,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ──────────────────────────────────────────
+    // 9. 히어로 텍스트 최초 등장 애니메이션
+    // ──────────────────────────────────────────
+    const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
+    if (firstContent) {
+        firstContent.style.opacity = '0';
+        firstContent.style.transform = 'translateY(30px)';
+        firstContent.style.transition = 'none';
+
+        setTimeout(() => {
+            firstContent.style.transition = 'opacity 1s ease, transform 1s ease';
+            firstContent.style.opacity = '1';
+            firstContent.style.transform = 'translateY(0)';
+        }, 300);
+    }
+
+    // 히어로 내부 텍스트 요소들 순차 등장
+    const heroElements = document.querySelectorAll('.hero-slide.active .hero-content-box > *');
+    heroElements.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'none';
+
+        setTimeout(() => {
+            el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 400 + (i * 150));
+    });
+
 });
