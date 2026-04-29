@@ -196,7 +196,6 @@ header.scrolled nav a.active {
         rgba(0, 77, 153, 0.9) 85%,
         rgba(0, 77, 153, 1) 100%
     );
-    pointer-events: none; /* 클릭 이벤트가 아래 슬라이드(점 등)로 전달되게 함 */
 }
 
 .hero-text {
@@ -211,20 +210,18 @@ header.scrolled nav a.active {
     padding: 3rem 6% 3rem 58%;
     opacity: 0;
     transition: opacity 0.8s ease;
-    pointer-events: none;
 }
 
 .hero-text.active {
     opacity: 1;
-    pointer-events: auto;
 }
 
 .hero-text h1 {
-    font-size: 4.5rem !important;
-    font-weight: 800 !important;
-    color: white !important;
-    line-height: 1.2 !important;
-    margin-bottom: 1.5rem !important;
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
 }
 
 .hero-sub-label {
