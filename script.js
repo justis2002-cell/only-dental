@@ -76,27 +76,29 @@ document.addEventListener('DOMContentLoaded', () => {
         function goToSlide(index) {
             const dots = document.querySelectorAll('.dot');
 
+            // 이미지와 점은 즉시 교체
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
-            if (texts[current]) texts[current].classList.remove('active');
+
+            // 텍스트는 즉시 끄기 (CSS 트랜지션에 의해 서서히 사라짐)
+            if (texts[current]) {
+                texts[current].classList.remove('active');
+                // 혹시 남아있을 수 있는 인라인 스타일 제거
+                texts[current].style.opacity = '';
+                texts[current].style.transition = '';
+            }
 
             current = index;
+
             slides[current].classList.add('active');
             dots[current].classList.add('active');
 
-            // 텍스트만 시간차를 두어 겹침 방지
+            // 0.4초 대기 후 다음 텍스트 켜기 (겹침 방지)
             setTimeout(() => {
-                if (texts[current]) texts[current].classList.add('active');
-            }, 500);
-        }
-
-        // 첫 슬라이드 텍스트 등장
-        if (texts[0]) {
-            texts[0].style.opacity = '0';
-            setTimeout(() => {
-                texts[0].style.transition = 'opacity 1s ease';
-                texts[0].style.opacity = '1';
-            }, 300);
+                if (texts[current]) {
+                    texts[current].classList.add('active');
+                }
+            }, 400);
         }
 
         setInterval(() => {
