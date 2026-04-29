@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // ──────────────────────────────────────────
     // 2. 스크롤 감지 → 헤더 색상 변경
     // ──────────────────────────────────────────
@@ -39,10 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-
     // ──────────────────────────────────────────
     // 3. 서브 히어로 텍스트 등장 애니메이션
-    //    (about, service, guide, knowledge, notice 공통)
     // ──────────────────────────────────────────
     const subHero = document.querySelector('.sub-hero > div');
     if (subHero) {
@@ -55,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             subHero.style.transform = 'translateY(0)';
         }, 200);
     }
-
 
     // ──────────────────────────────────────────
     // 4. 메인 히어로 슬라이더
@@ -79,19 +75,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function goToSlide(index) {
             const dots = document.querySelectorAll('.dot');
-
-            // 이미지 전환
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
-
-            // 텍스트 전환 (이미지랑 별개!)
             if (texts[current]) texts[current].classList.remove('active');
-
             current = index;
-
             slides[current].classList.add('active');
             dots[current].classList.add('active');
             if (texts[current]) texts[current].classList.add('active');
+        }
+
+        // 첫 슬라이드 텍스트 등장
+        if (texts[0]) {
+            texts[0].style.opacity = '0';
+            setTimeout(() => {
+                texts[0].style.transition = 'opacity 1s ease';
+                texts[0].style.opacity = '1';
+            }, 300);
         }
 
         setInterval(() => {
@@ -99,9 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-
     // ──────────────────────────────────────────
-    // 5. 스크롤 애니메이션 (모든 페이지 공통)
+    // 5. 스크롤 애니메이션
     // ──────────────────────────────────────────
     const animStyle = document.createElement('style');
     animStyle.textContent = `
@@ -135,28 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(animStyle);
 
-    // 페이지별 애니메이션 대상
     const animTargets = [
-        // 공통
         { selector: '.section-title', cls: 'anim-hidden' },
-        // index.html
         { selector: '.about-text', cls: 'anim-hidden-left' },
         { selector: '.about-image', cls: 'anim-hidden-right' },
         { selector: '.system-row', cls: 'anim-hidden' },
         { selector: '.service-item', cls: 'anim-hidden' },
         { selector: '#hours > div > div', cls: 'anim-hidden' },
-        // about.html
         { selector: '.doctor-card', cls: 'anim-hidden' },
         { selector: '.content-section .section-title', cls: 'anim-hidden' },
-        // service.html
         { selector: '.service-detail-item .service-detail-img', cls: 'anim-hidden-left' },
         { selector: '.service-detail-item .service-detail-text', cls: 'anim-hidden-right' },
-        // guide.html
         { selector: '.guide-item .guide-image', cls: 'anim-hidden-left' },
         { selector: '.guide-item .guide-text', cls: 'anim-hidden-right' },
-        // knowledge.html
         { selector: '.faq-item', cls: 'anim-hidden' },
-        // notice.html
         { selector: '.board-table tr', cls: 'anim-hidden' },
     ];
 
@@ -184,9 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.anim-hidden, .anim-hidden-left, .anim-hidden-right')
         .forEach(el => observer.observe(el));
 
-
     // ──────────────────────────────────────────
-    // 6. 서비스 카드 틸트 (index.html)
+    // 6. 서비스 카드 틸트
     // ──────────────────────────────────────────
     document.querySelectorAll('.service-item').forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -203,9 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
     // ──────────────────────────────────────────
-    // 7. System 카드 배지 호버 (index.html)
+    // 7. System 카드 배지 호버
     // ──────────────────────────────────────────
     document.querySelectorAll('.system-row').forEach(row => {
         row.addEventListener('mouseenter', () => {
@@ -225,9 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
     // ──────────────────────────────────────────
-    // 8. 의사 카드 호버 (about.html)
+    // 8. 의사 카드 호버
     // ──────────────────────────────────────────
     document.querySelectorAll('.doctor-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
@@ -240,23 +227,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
     // ──────────────────────────────────────────
-    // 9. FAQ 아코디언 (knowledge.html)
+    // 9. FAQ 아코디언
     // ──────────────────────────────────────────
     document.querySelectorAll('.faq-question').forEach(item => {
         item.addEventListener('click', () => {
             const parent = item.parentElement;
             const isActive = parent.classList.contains('active');
-            // 다른 항목 닫기
             document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
             if (!isActive) parent.classList.add('active');
         });
     });
 
-
     // ──────────────────────────────────────────
-    // 10. 전화번호 박스 클릭 (index.html)
+    // 10. 전화번호 박스 클릭
     // ──────────────────────────────────────────
     const phoneBox = document.querySelector('#hours [style*="accent-green"]');
     if (phoneBox) {
@@ -274,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'tel:0212345678';
         });
     }
-
 
     // ──────────────────────────────────────────
     // 11. 스무스 스크롤
