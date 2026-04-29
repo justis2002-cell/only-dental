@@ -167,13 +167,13 @@ header.scrolled nav a.active {
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-    pointer-events: none; /* 이거 추가! */
+    transition: opacity 1s ease;
+    pointer-events: none;
 }
 
 .hero-slide.active {
     opacity: 1;
-    pointer-events: auto; /* 이거 추가! */
+    pointer-events: auto;
 }
 
 /* 히어로 파란 박스 */
