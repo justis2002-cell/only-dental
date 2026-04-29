@@ -169,11 +169,13 @@ header.scrolled nav a.active {
     opacity: 0;
     transition: opacity 1s ease;
     pointer-events: none;
+    z-index: 1;
 }
 
 .hero-slide.active {
     opacity: 1;
     pointer-events: auto;
+    z-index: 2;
 }
 
 /* 히어로 파란 박스 */
@@ -197,6 +199,7 @@ header.scrolled nav a.active {
     flex-direction: column;
     justify-content: center;
     padding: 3rem 6% 3rem 58%;
+    z-index: 3;
     transition: none;
 }
 
