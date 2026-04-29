@@ -88,43 +88,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentSlide = slides[current];
             const nextSlide = slides[index];
 
-            // 다음 슬라이드 미리 준비 (뒤에 깔아두기)
             nextSlide.style.opacity = '0';
             nextSlide.classList.add('active');
             dots[current]?.classList.remove('active');
             dots[index]?.classList.add('active');
 
-            // 현재 슬라이드 페이드 아웃하면서 동시에 다음 슬라이드 페이드 인
-            requestAnimationFrame(() => {
-                currentSlide.style.transition = 'opacity 1s ease';
-                currentSlide.style.opacity = '0';
+            currentSlide.style.transition = 'opacity 1s ease';
+            currentSlide.style.opacity = '0';
+            nextSlide.style.transition = 'opacity 1s ease';
+            nextSlide.style.opacity = '1';
 
-                nextSlide.style.transition = 'opacity 1s ease';
-                nextSlide.style.opacity = '1';
-
-                // 텍스트 애니메이션
-                const content = nextSlide.querySelector('.hero-content-box');
-                if (content) {
-                    content.style.opacity = '0';
-                    content.style.transform = 'translateY(20px)';
-                    content.style.transition = 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s';
-                    requestAnimationFrame(() => {
-                        content.style.opacity = '1';
-                        content.style.transform = 'translateY(0)';
-                    });
-                }
-
+            const content = nextSlide.querySelector('.hero-content-box');
+            if (content) {
+                content.style.transition = 'opacity 0.8s ease 0.3s';
+                content.style.opacity = '0';
                 setTimeout(() => {
-                    currentSlide.classList.remove('active');
-                    currentSlide.style.opacity = '';
-                    currentSlide.style.transition = '';
-                    current = index;
-                }, 1000);
-            });
+                    content.style.opacity = '1';
+                }, 100);
+            }
+
+            setTimeout(() => {
+                currentSlide.classList.remove('active');
+                currentSlide.style.opacity = '';
+                currentSlide.style.transition = '';
+                current = index;
+            }, 1000);
         }
 
-        function startAutoPlay() { slideTimer = setInterval(() => goToSlide((current + 1) % slides.length), 4500); }
-        function stopAutoPlay() { clearInterval(slideTimer); }
+        function startAutoPlay() {
+            slideTimer = setInterval(() => {
+                goToSlide((current + 1) % slides.length);
+            }, 4000); // 모든 슬라이드 동일한 간격!
+        }
+
+        function stopAutoPlay() {
+            clearInterval(slideTimer);
+        }
 
         const hero = document.querySelector('.hero');
         hero.addEventListener('mouseenter', stopAutoPlay);
