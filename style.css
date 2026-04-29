@@ -210,10 +210,14 @@ header.scrolled nav a.active {
     padding: 3rem 6% 3rem 58%;
     opacity: 0;
     transition: opacity 0.8s ease;
+    pointer-events: none;
+    z-index: 11;
 }
 
 .hero-text.active {
     opacity: 1;
+    pointer-events: auto;
+    z-index: 12;
 }
 
 .hero-text h1 {
