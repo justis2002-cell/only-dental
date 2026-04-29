@@ -78,15 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
-
-            // 다음 텍스트 먼저 켜고!
-            if (texts[index]) texts[index].classList.add('active');
-            // 그 다음 현재 텍스트 끄기!
             if (texts[current]) texts[current].classList.remove('active');
 
             current = index;
             slides[current].classList.add('active');
             dots[current].classList.add('active');
+
+            // 텍스트만 시간차를 두어 겹침 방지
+            setTimeout(() => {
+                if (texts[current]) texts[current].classList.add('active');
+            }, 500);
         }
 
         // 첫 슬라이드 텍스트 등장
