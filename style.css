@@ -197,6 +197,7 @@ header.scrolled nav a.active {
     flex-direction: column;
     justify-content: center;
     padding: 3rem 6% 3rem 58%;
+    transition: none;
 }
 
 .hero-content-box h1 {

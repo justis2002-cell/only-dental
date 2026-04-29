@@ -156,9 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
             opacity: 1;
             transform: translateX(0);
         }
-        .hero-content-box {
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
     `;
     document.head.appendChild(animStyle);
 
