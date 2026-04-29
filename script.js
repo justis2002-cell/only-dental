@@ -83,12 +83,33 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[current].classList.remove('active');
             dots[current].classList.remove('active');
             
-            // current 먼저 업데이트!
+            // current 업데이트
             current = index;
             
             // 다음 켜기
             slides[current].classList.add('active');
             dots[current].classList.add('active');
+
+            // 텍스트 opacity만 애니메이션!
+            const content = slides[current].querySelector('.hero-content-box');
+            if (content) {
+                content.style.opacity = '0';
+                content.style.transition = 'none';
+                setTimeout(() => {
+                    content.style.transition = 'opacity 0.8s ease';
+                    content.style.opacity = '1';
+                }, 50);
+            }
+        }
+
+        // 첫 슬라이드 텍스트도!
+        const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
+        if (firstContent) {
+            firstContent.style.opacity = '0';
+            setTimeout(() => {
+                firstContent.style.transition = 'opacity 1s ease';
+                firstContent.style.opacity = '1';
+            }, 300);
         }
 
         setInterval(() => {
