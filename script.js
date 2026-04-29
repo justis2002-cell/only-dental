@@ -12,16 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             nav.classList.toggle('active');
             toggleButton.textContent = nav.classList.contains('active') ? '✕' : '☰';
         });
-
-        // 외부 클릭 시 메뉴 닫기
         document.addEventListener('click', (e) => {
             if (!nav.contains(e.target) && !toggleButton.contains(e.target)) {
                 nav.classList.remove('active');
                 toggleButton.textContent = '☰';
             }
         });
-
-        // 메뉴 링크 클릭 시 닫기
         nav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 nav.classList.remove('active');
@@ -32,47 +28,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ──────────────────────────────────────────
-    // 2. 스크롤 감지 → 헤더 스타일 변경
-    //    + 네비게이션 현재 섹션 active 표시
+    // 2. 스크롤 감지 → 헤더 색상 변경
     // ──────────────────────────────────────────
     const header = document.querySelector('header');
-    const navLinks = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('section[id]');
-
     window.addEventListener('scroll', () => {
-        // 헤더 스크롤 효과
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-
-        // 현재 섹션 감지 → nav active
-        let currentSection = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120;
-            if (window.scrollY >= sectionTop) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
-        });
     }, { passive: true });
 
 
     // ──────────────────────────────────────────
-    // 3. 히어로 슬라이더 + 도트 동적 생성 + 자동 재생
+    // 3. 서브 히어로 텍스트 등장 애니메이션
+    //    (about, service, guide, knowledge, notice 공통)
+    // ──────────────────────────────────────────
+    const subHero = document.querySelector('.sub-hero > div');
+    if (subHero) {
+        subHero.style.opacity = '0';
+        subHero.style.transform = 'translateY(30px)';
+        subHero.style.transition = 'none';
+        setTimeout(() => {
+            subHero.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+            subHero.style.opacity = '1';
+            subHero.style.transform = 'translateY(0)';
+        }, 200);
+    }
+
+
+    // ──────────────────────────────────────────
+    // 4. 메인 히어로 슬라이더 (index.html 전용)
     // ──────────────────────────────────────────
     const slides = document.querySelectorAll('.hero-slide');
     let current = 0;
     let slideTimer = null;
 
-    // 도트 동적 생성 (HTML에 없어도 자동으로 만들어줌)
     if (slides.length > 0) {
         const heroSection = document.querySelector('.hero');
         let dotsWrapper = document.querySelector('.hero-dots');
@@ -81,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dotsWrapper = document.createElement('div');
             dotsWrapper.className = 'hero-dots';
             heroSection.appendChild(dotsWrapper);
-
             slides.forEach((_, i) => {
                 const dot = document.createElement('div');
                 dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -93,22 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const dots = document.querySelectorAll('.dot');
 
         function goToSlide(index) {
-            // 콘텐츠 박스 페이드 아웃
             const currentContent = slides[current].querySelector('.hero-content-box');
             if (currentContent) {
                 currentContent.style.opacity = '0';
                 currentContent.style.transform = 'translateY(10px)';
             }
-
             slides[current].classList.remove('active');
             dots[current]?.classList.remove('active');
-
             current = index;
-
             slides[current].classList.add('active');
             dots[current]?.classList.add('active');
-
-            // 콘텐츠 박스 페이드 인
             const nextContent = slides[current].querySelector('.hero-content-box');
             if (nextContent) {
                 nextContent.style.transition = 'none';
@@ -124,33 +108,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function nextSlide() {
-            goToSlide((current + 1) % slides.length);
-        }
+        function startAutoPlay() { slideTimer = setInterval(() => goToSlide((current + 1) % slides.length), 4500); }
+        function stopAutoPlay() { clearInterval(slideTimer); }
 
-        function startAutoPlay() {
-            slideTimer = setInterval(nextSlide, 4500);
-        }
-
-        function stopAutoPlay() {
-            clearInterval(slideTimer);
-        }
-
-        // 도트 호버 시 자동재생 일시정지
         const hero = document.querySelector('.hero');
         hero.addEventListener('mouseenter', stopAutoPlay);
         hero.addEventListener('mouseleave', startAutoPlay);
+
+        // 첫 슬라이드 텍스트 등장
+        const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
+        if (firstContent) {
+            firstContent.style.opacity = '0';
+            firstContent.style.transform = 'translateY(30px)';
+            firstContent.style.transition = 'none';
+            setTimeout(() => {
+                firstContent.style.transition = 'opacity 1s ease, transform 1s ease';
+                firstContent.style.opacity = '1';
+                firstContent.style.transform = 'translateY(0)';
+            }, 300);
+
+            // 내부 요소 순차 등장
+            const heroElements = firstContent.querySelectorAll('*');
+            heroElements.forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(15px)';
+                el.style.transition = 'none';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 400 + (i * 100));
+            });
+        }
 
         startAutoPlay();
     }
 
 
     // ──────────────────────────────────────────
-    // 4. 스크롤 진입 애니메이션 (Intersection Observer)
-    //    섹션, 카드, 이미지 등 등장 효과
+    // 5. 스크롤 애니메이션 (모든 페이지 공통)
     // ──────────────────────────────────────────
-
-    // 애니메이션 CSS 동적 삽입
     const animStyle = document.createElement('style');
     animStyle.textContent = `
         .anim-hidden {
@@ -186,17 +183,29 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(animStyle);
 
-    // 애니메이션 대상 요소 지정
+    // 페이지별 애니메이션 대상
     const animTargets = [
+        // 공통
         { selector: '.section-title', cls: 'anim-hidden' },
+        // index.html
         { selector: '.about-text', cls: 'anim-hidden-left' },
         { selector: '.about-image', cls: 'anim-hidden-right' },
         { selector: '.system-row', cls: 'anim-hidden' },
         { selector: '.service-item', cls: 'anim-hidden' },
         { selector: '#hours > div > div', cls: 'anim-hidden' },
-        { selector: '#location .section-title', cls: 'anim-hidden' },
-        { selector: '#location iframe', cls: 'anim-hidden' },
-        { selector: '#location [style*="flex: 1"]', cls: 'anim-hidden' },
+        // about.html
+        { selector: '.doctor-card', cls: 'anim-hidden' },
+        { selector: '.content-section .section-title', cls: 'anim-hidden' },
+        // service.html
+        { selector: '.service-detail-item .service-detail-img', cls: 'anim-hidden-left' },
+        { selector: '.service-detail-item .service-detail-text', cls: 'anim-hidden-right' },
+        // guide.html
+        { selector: '.guide-item .guide-image', cls: 'anim-hidden-left' },
+        { selector: '.guide-item .guide-text', cls: 'anim-hidden-right' },
+        // knowledge.html
+        { selector: '.faq-item', cls: 'anim-hidden' },
+        // notice.html
+        { selector: '.board-table tr', cls: 'anim-hidden' },
     ];
 
     animTargets.forEach(({ selector, cls }) => {
@@ -206,54 +215,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // 여러 카드가 동시에 들어올 때 순차 딜레이
                 const siblings = [...entry.target.parentElement.children];
                 const index = siblings.indexOf(entry.target);
-                const delay = index * 100;
-
                 setTimeout(() => {
                     entry.target.classList.add('anim-visible');
-                }, delay);
-
+                }, index * 100);
                 observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -60px 0px'
-    });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
     document.querySelectorAll('.anim-hidden, .anim-hidden-left, .anim-hidden-right')
         .forEach(el => observer.observe(el));
 
 
     // ──────────────────────────────────────────
-    // 5. 서비스 카드 마우스 틸트 효과
+    // 6. 서비스 카드 틸트 (index.html)
     // ──────────────────────────────────────────
     document.querySelectorAll('.service-item').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -5;
-            const rotateY = ((x - centerX) / centerX) * 5;
-
+            const rotateX = ((y - rect.height / 2) / rect.height) * -5;
+            const rotateY = ((x - rect.width / 2) / rect.width) * 5;
             card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
         });
-
         card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
             card.style.transition = 'transform 0.4s ease';
+            card.style.transform = '';
         });
     });
 
 
     // ──────────────────────────────────────────
-    // 6. System 카드 호버 시 배지 색상 변화
+    // 7. System 카드 배지 호버 (index.html)
     // ──────────────────────────────────────────
     document.querySelectorAll('.system-row').forEach(row => {
         row.addEventListener('mouseenter', () => {
@@ -275,13 +273,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ──────────────────────────────────────────
-    // 7. 진료시간 섹션 전화번호 클릭 피드백
+    // 8. 의사 카드 호버 (about.html)
+    // ──────────────────────────────────────────
+    document.querySelectorAll('.doctor-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.borderColor = 'var(--accent-green)';
+            card.style.transition = 'all 0.3s ease';
+        });
+        card.addEventListener('mouseleave', () => {
+            const isChief = card.classList.contains('chief');
+            card.style.borderColor = isChief ? 'var(--primary-blue)' : '#eee';
+        });
+    });
+
+
+    // ──────────────────────────────────────────
+    // 9. FAQ 아코디언 (knowledge.html)
+    // ──────────────────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            const isActive = parent.classList.contains('active');
+            // 다른 항목 닫기
+            document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+            if (!isActive) parent.classList.add('active');
+        });
+    });
+
+
+    // ──────────────────────────────────────────
+    // 10. 전화번호 박스 클릭 (index.html)
     // ──────────────────────────────────────────
     const phoneBox = document.querySelector('#hours [style*="accent-green"]');
     if (phoneBox) {
         phoneBox.style.cursor = 'pointer';
         phoneBox.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-
         phoneBox.addEventListener('mouseenter', () => {
             phoneBox.style.transform = 'scale(1.02)';
             phoneBox.style.boxShadow = '0 8px 20px rgba(32,201,151,0.4)';
@@ -297,49 +323,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ──────────────────────────────────────────
-    // 8. 스무스 스크롤 (같은 페이지 앵커 링크)
+    // 11. 스무스 스크롤
     // ──────────────────────────────────────────
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
-            const targetId = anchor.getAttribute('href');
-            const target = document.querySelector(targetId);
+            const target = document.querySelector(anchor.getAttribute('href'));
             if (target) {
                 e.preventDefault();
-                const headerHeight = document.querySelector('header')?.offsetHeight || 80;
-                const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-                window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                const headerHeight = header?.offsetHeight || 80;
+                window.scrollTo({
+                    top: target.getBoundingClientRect().top + window.scrollY - headerHeight,
+                    behavior: 'smooth'
+                });
             }
         });
-    });
-
-    // ──────────────────────────────────────────
-    // 9. 히어로 텍스트 최초 등장 애니메이션
-    // ──────────────────────────────────────────
-    const firstContent = document.querySelector('.hero-slide.active .hero-content-box');
-    if (firstContent) {
-        firstContent.style.opacity = '0';
-        firstContent.style.transform = 'translateY(30px)';
-        firstContent.style.transition = 'none';
-
-        setTimeout(() => {
-            firstContent.style.transition = 'opacity 1s ease, transform 1s ease';
-            firstContent.style.opacity = '1';
-            firstContent.style.transform = 'translateY(0)';
-        }, 300);
-    }
-
-    // 히어로 내부 텍스트 요소들 순차 등장
-    const heroElements = document.querySelectorAll('.hero-slide.active .hero-content-box > *');
-    heroElements.forEach((el, i) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'none';
-
-        setTimeout(() => {
-            el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, 400 + (i * 150));
     });
 
 });
